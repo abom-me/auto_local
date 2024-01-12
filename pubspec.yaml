@@ -1,0 +1,18 @@
+name: auto_local
+description: A sample command-line application.
+version: 1.0.0
+repository: https://github.com/abom-me/auto_local
+executables:
+  auto_local: auto_local
+environment:
+  sdk: ^3.2.3
+
+# Add regular dependencies here.
+dependencies:
+  ansicolor: ^2.0.2
+  watcher: ^1.1.0
+  # path: ^1.8.0
+
+dev_dependencies:
+  lints: ^3.0.0
+  test: ^1.25.1
