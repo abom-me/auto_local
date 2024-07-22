@@ -5,20 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="956c0d2e-a907-47a2-92ce-1363f97358e7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/lib/commands.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/icons/icon.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/lang/lang.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/settings.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/upload.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/update/update.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/auto_local.dart" beforeDir="false" afterPath="$PROJECT_DIR$/bin/auto_local.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/auto_local.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/functions.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/functions.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ar.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/en.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/icons/icon.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/icons/icon.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/lang/lang.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/lang/lang.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/print_color.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/settings.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/settings.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/upload.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/upload.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/auto_local_test.dart" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,32 +52,33 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Dart Command Line App.auto_local.dart.executor&quot;: &quot;Run&quot;,
-    &quot;Dart Command Line App.login.dart.executor&quot;: &quot;Run&quot;,
-    &quot;Dart Command Line App.run.dart.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;login&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/abom/Documents/auto_local&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;show.migrate.to.gradle.popup&quot;: &quot;false&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Dart Command Line App.auto_local.dart.executor": "Run",
+    "Dart Command Line App.login.dart.executor": "Run",
+    "Dart Command Line App.run.dart.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "dart.analysis.tool.window.visible": "false",
+    "git-widget-placeholder": "newversion",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/Users/abom/Documents/auto_local",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "show.migrate.to.gradle.popup": "false",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/lib/utils" />
       <recent name="$PROJECT_DIR$/lib/icons" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/example" />
       <recent name="$PROJECT_DIR$/lib" />
     </key>
   </component>
@@ -117,8 +117,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.15989.150" />
-        <option value="bundled-js-predefined-1d06a55b98c1-91d5c284f522-JavaScript-IU-241.15989.150" />
+        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.18034.62" />
+        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-IU-241.18034.62" />
       </set>
     </attachedChunks>
   </component>
@@ -153,6 +153,7 @@
       <workItem from="1721304507818" duration="11991000" />
       <workItem from="1721383677444" duration="2021000" />
       <workItem from="1721464455393" duration="297000" />
+      <workItem from="1721465160944" duration="9240000" />
     </task>
     <servers />
   </component>

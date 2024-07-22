@@ -4,8 +4,8 @@ import 'package:dart_widget/dart_widget.dart';
 import 'package:args/command_runner.dart';
 import 'package:auto_local/settings.dart';
 import 'package:http/http.dart' as http;
+import 'package:tint/tint.dart';
 import 'package:watcher/watcher.dart';
-import '../print_color.dart';
 
 class Lang extends Command {
   Lang() {
@@ -23,7 +23,6 @@ class Lang extends Command {
 
   late String _directoryPath;
   late bool _usingAppLocal;
-  final Print pen = Print();
   final Settings settings = Settings();
   // final input = stdout;
 
@@ -45,7 +44,7 @@ class Lang extends Command {
     } else if (argResults?['adm'] == true) {
       _addManualy();
     } else {
-      pen.red('No valid flag provided. Use --help to see available options.');
+      print('No valid flag provided. Use --help to see available options.'.red());
     }
   }
   _editPath() {
@@ -69,7 +68,18 @@ class Lang extends Command {
     if (settings.loadFile()?['lang_path'] == null) {
       String path = TextField(
                   prompt: "✏️ Enter your language folder path: ",
-                  hint: "ex:assets/lng/")
+                  hint: "ex:assets/lng/",
+      validator: (String path) {
+                    print(path);
+        if (path.isEmpty) {
+          throw ValidationErrors("The path can not be empty");
+        } else if (!Directory(path).existsSync()) {
+          throw ValidationErrors("This path is not exist in your project");
+        } else {
+          return true;
+        }
+      }
+      )
               .oneline() ??
           "";
       _directoryPath = path;
@@ -119,12 +129,14 @@ class Lang extends Command {
         });
       }
     } else {
-      pen.yellow(
-          '\n\n ⚠️No data provided to add. Use --add "your text here" to add new text.⚠️');
+      print(
+          '\n\n ⚠️No data provided to add. Use --add "your text here" to add new text.⚠️'.yellow());
     }
   }
 
   Future<void> _updateDartClass() async {
+
+    settings.pathChecker(_directoryPath);
     final directory = Directory(_directoryPath);
     late File langFile;
 
@@ -137,17 +149,21 @@ class Lang extends Command {
         }
       }
     } else {
-      pen.red('Directory not found: $_directoryPath');
+      print('Directory not found: $_directoryPath'.red());
       return;
     }
 
     final jsonString = await langFile.readAsString();
     final Map<String, dynamic> jsonData = json.decode(jsonString);
     final generatedCode = _generateClassCode(jsonData);
-
+final loading = CircleLoading(
+          onDoneText: 'Your Dart class updated successfully',
+          loadingText: 'Updating your Dart class',
+        );
+        loading.start();
     await Directory("lib/auto_local").create(recursive: true);
     await File('lib/auto_local/lang.dart').writeAsString(generatedCode);
-    pen.yellow("Your Dart class updated successfully");
+    loading.stop();
   }
 
   String _generateClassCode(Map<String, dynamic> jsonData) {
@@ -210,6 +226,11 @@ $classMethods
       List<String> languages = files
           .map((file) => file.uri.pathSegments.last.split('.').first)
           .toList();
+      final loading = CircleLoading(
+        onDoneText: 'The Translation Added',
+        loadingText: 'Adding the translation with GPT',
+      );
+      loading.start();
       Map<String, dynamic> data = await askGPT(text, languages, api);
 
       if (data.isNotEmpty) {
@@ -232,23 +253,23 @@ $classMethods
 
               await newLangFile.writeAsString(updatedJsonString, flush: true);
             } catch (e) {
-              pen.red('Error reading or updating file for language: $key');
-              pen.red('Error details: $e');
+              print('Error reading or updating file for language: $key'.red());
+              print('Error details: $e'.red());
             }
           } else {
-            pen.red('Language file not found for code: $key');
+            print('Language file not found for code: $key'.red());
           }
         }
-
-        pen.green('''
+loading.stop();
+        print('''
           -----------------👀 The Translation Added 👀-----------------
           -> The text translated to [${languages.join(', ')}]
           -> Original text: $text
-          -> The text Key: ${text.replaceAll(" ", "_").replaceAll(".", "").replaceAll("'", "").toLowerCase()}
+          -> The text Key: ${data['en'].replaceAll(" ", "_").replaceAll(".", "").replaceAll("'", "").toLowerCase()}
           -----------------------------------------------------------
-        ''');
+        '''.green());
       } else {
-        pen.red('Empty or invalid data received from askGPT');
+        print('Empty or invalid data received from GPT'.red());
       }
     }
   }
@@ -261,8 +282,8 @@ $classMethods
       }
     });
 
-    pen.magenta(
-        "|------------------Waiting new data in $_directoryPath---------------------|");
+    print(
+        "|------------------Waiting new data in $_directoryPath---------------------|".magenta());
   }
 
   _checkUsingAppLocal() {
@@ -337,12 +358,14 @@ $classMethods
         var result = jsonDecode(data['choices'][0]['message']['content']);
         return result;
       } catch (e) {
-        pen.red('Error parsing response body: $e');
+        askGPT(text, languages, api);
+        print('Error parsing response body: $e'.red());
         return {};
       }
     } else {
-      pen.red('Error Status Code: $statusCode');
-      pen.red('Error Response Body: ${response.body}');
+      // askGPT(text, languages, api);
+      print('Error Status Code: $statusCode'.red());
+      print('Error Response Body: ${response.body}'.red());
       return {};
     }
   }
@@ -398,11 +421,11 @@ $classMethods
 
             await newLangFile.writeAsString(updatedJsonString, flush: true);
           } catch (e) {
-            pen.red('Error reading or updating file for language: $lang');
-            pen.red('Error details: $e');
+            print('Error reading or updating file for language: $lang'.red());
+            print('Error details: $e'.red());
           }
         } else {
-          pen.red('Language file not found for code: $lang');
+          print('Language file not found for code: $lang'.red());
         }
       }
     } else {

@@ -1,22 +1,20 @@
 name: auto_local
 description: A command-line tool to generate localizations for your app automatically.
-version: 1.0.1
+version: 2.0.0
 repository: https://github.com/abom-me/auto_local
 executables:
   auto_local: auto_local
 environment:
   sdk: ^3.2.3
 
-# Add regular dependencies here.
 dependencies:
-  ansi: ^0.4.2
-  ansicolor: ^2.0.2
   args: ^2.5.0
   crypto: ^3.0.3
   dart_jsonwebtoken: ^2.14.0
   dart_widget: ^1.0.0
   encrypt: ^5.0.3
-  http: ^1.2.1
+  http: ^1.2.2
+  pub_updater: ^0.4.0
   tint: ^2.0.1
   watcher: ^1.1.0
 

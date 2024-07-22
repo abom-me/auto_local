@@ -3,13 +3,12 @@ import 'dart:io';
 import 'dart:mirrors';
 import 'dart:typed_data';
 
-import 'package:auto_local/print_color.dart';
 import 'package:crypto/crypto.dart';
 import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:encrypt/encrypt.dart';
+import 'package:tint/tint.dart';
 
 class Settings{
-  final Print pen = Print();
 
 
   void createFile(Map<String, dynamic> data) {
@@ -128,7 +127,14 @@ checkDotIgnores() {
     file.writeAsStringSync(content);
 }
 
-
+  bool pathChecker(String path)  {
+    final directory = Directory(path);
+    if (directory.existsSync()) {
+      return true;
+    } else {
+      throw 'This path is not found: $path'.red() ;
+    }
+  }
   //
   // Future<LibraryMirror> loadLibrary(String path) async {
   //   Directory current = Directory.current;
