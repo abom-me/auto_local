@@ -135,7 +135,22 @@ checkDotIgnores() {
       throw 'This path is not found: $path'.red() ;
     }
   }
-  //
+
+  Map<String,dynamic> yamlToMap(String yaml) {
+    var lines = yaml.split("\n");
+    Map<String,dynamic> map = {};
+    for (var line in lines) {
+      if (line.trim().isEmpty) continue;
+      var parts = line.split(":");
+
+      if (parts.length == 2) {
+        map[parts[0].trim()] = parts[1].trim();
+      }
+    }
+    return map;
+  }
+
+//
   // Future<LibraryMirror> loadLibrary(String path) async {
   //   Directory current = Directory.current;
   //   print('Current Directory: $current');

@@ -40,8 +40,8 @@ loading.stop();
     if(!isUpToDate){
       final latestVersion = await pubUpdater.getLatestVersion("auto_local");
 
-      print("⚠️ There is a new update".yellow()+" $version -> $latestVersion".green());
-      print("Run ${"auto_local update".blue().bold()} to update");
+      print("\n⚠️ There is a new update".yellow()+" $version -> $latestVersion".green());
+      print("Run ${"auto_local update".blue().bold()} to update\n");
     }
   }
   @override

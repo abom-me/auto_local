@@ -5,18 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="956c0d2e-a907-47a2-92ce-1363f97358e7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/lib/update/update.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/assets/assets.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/dotenv/env.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/auto_local.dart" beforeDir="false" afterPath="$PROJECT_DIR$/bin/auto_local.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ar.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/en.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/icons/icon.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/icons/icon.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/lang/lang.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/lang/lang.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/print_color.dart" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/settings.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/settings.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/upload.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/upload.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/update/update.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/update/update.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -34,11 +29,28 @@
       </list>
     </option>
   </component>
+  <component name="FormatOnSaveOptions">
+    <option name="mySelectedFileTypes">
+      <set>
+        <option value="Prisma" />
+      </set>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GoLibraries">
+    <option name="indexEntireGoPath" value="true" />
+  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
+  </component>
+  <component name="OptimizeOnSaveOptions">
+    <option name="myRunOnSave" value="false" />
+    <option name="myAllFileTypesSelected" value="true" />
+    <option name="mySelectedFileTypes">
+      <set />
+    </option>
   </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
@@ -52,26 +64,31 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Dart Command Line App.auto_local.dart.executor": "Run",
-    "Dart Command Line App.login.dart.executor": "Run",
-    "Dart Command Line App.run.dart.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "dart.analysis.tool.window.visible": "false",
-    "git-widget-placeholder": "newversion",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/abom/Documents/auto_local",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "show.migrate.to.gradle.popup": "false",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Dart Command Line App.auto_local.dart.executor&quot;: &quot;Run&quot;,
+    &quot;Dart Command Line App.login.dart.executor&quot;: &quot;Run&quot;,
+    &quot;Dart Command Line App.run.dart.executor&quot;: &quot;Run&quot;,
+    &quot;Flutter.main.dart.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.formatter.settings.were.checked&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.migrated.go.modules.settings&quot;: &quot;true&quot;,
+    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;newversion&quot;,
+    &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
+    &quot;io.flutter.reload.alreadyRun&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/abom/Documents/auto_local&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;show.migrate.to.gradle.popup&quot;: &quot;false&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/lib/utils" />
@@ -79,10 +96,12 @@
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/example" />
+      <recent name="$PROJECT_DIR$/example/lib" />
+      <recent name="$PROJECT_DIR$/example/assets" />
       <recent name="$PROJECT_DIR$/lib" />
     </key>
   </component>
-  <component name="RunManager" selected="Dart Command Line App.auto_local.dart">
+  <component name="RunManager" selected="Flutter.main.dart">
     <configuration name="auto_local.dart" type="DartCommandLineRunConfigurationType" factoryName="Dart Command Line Application">
       <option name="filePath" value="$PROJECT_DIR$/bin/auto_local.dart" />
       <option name="workingDirectory" value="$PROJECT_DIR$" />
@@ -153,12 +172,18 @@
       <workItem from="1721304507818" duration="11991000" />
       <workItem from="1721383677444" duration="2021000" />
       <workItem from="1721464455393" duration="297000" />
-      <workItem from="1721465160944" duration="9240000" />
+      <workItem from="1721465160944" duration="9582000" />
+      <workItem from="1721633389112" duration="14211000" />
+      <workItem from="1721789579145" duration="12357000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VgoProject">
+    <integration-enabled>false</integration-enabled>
+    <settings-migrated>true</settings-migrated>
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
