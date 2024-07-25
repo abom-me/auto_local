@@ -13,10 +13,10 @@ class Assets extends Command {
   Assets() {
     argParser.addFlag('generate',
         abbr: 'g', negatable: false, help: 'Generate assets class.');
-    argParser.addFlag('listen',
-        abbr: 'l', negatable: false, help: 'Listen to the assets folder.');
+    argParser.addFlag('auto',
+        abbr: 'l', negatable: false, help: 'To listen for any changes in `assets/` and update the dart class.');
     argParser.addFlag('ignore',
-        abbr: 'i', negatable: false, help: 'Ignore folder.');
+        abbr: 'i', negatable: false, help: 'To ignore any folder in the assets folder , so the tool will not add it in the dart class.');
   }
 
   // List of asset folders
@@ -185,7 +185,7 @@ class Assets {
 
   @override
   String get description =>
-      "Generate assets class and listen to the assets folder";
+      "Generate assets class and listen to the assets folder and call the assets path from the dart class directly.";
 
   @override
   String get name => "assets";
