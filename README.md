@@ -1,13 +1,15 @@
 # auto_local:
 
 
-####  A command-line tool to generate localizations for your app automatically.
-This tool is used to generate a dart class from a JSON file.
-the json file path should be in assets/lang/ directory.
-because this tool is depend on [flutter_locales2](https://pub.dev/packages/flutter_locales2) package.
-the tool will keep watching for changes in assets/lang/ directory.
-and will generate a dart class with the name lang.dart in lib/auto_local/ directory.
-the class will contain all the keys in the json file.
+####  A command-line tool to manage the assets in your app.
+The tool will help you in:
+- Manage languages in your app.
+- Generate a dart class for each language.
+- Add GPT to translate the text for all languages in your app.
+- Convert Svg code to Svg file.
+- Add class for all svg icons in your app with method to use it.
+- Add class for all assets in your app with method to use it.
+- Manage the .env file in your app and generate a class to use it.
 
 ![GitHub](https://img.shields.io/github/license/abom-me/auto_local)
 ![GitHub stars](https://img.shields.io/github/stars/abom-me/auto_local)
@@ -56,7 +58,10 @@ Otherwise, you can run it using the `pub global` command.
 $ dart pub global run auto_local
 ```
 
-#### After running the tool you will listen to any changes in the json file and generate a dart class with the name lang.dart in lib/auto_local/ directory.
+## Commands
 
+- `auto_local` : To start the tool.
+- `auto_local lang` : To manage the languages in your app.
+  - `--adg` : Add Translate for all languages using GPT.
 
 

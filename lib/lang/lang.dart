@@ -10,7 +10,8 @@ import 'package:watcher/watcher.dart';
 class Lang extends Command {
   Lang() {
     argParser.addFlag('adg',
-        help: 'Add new text to the language file using GPT <you have to provide API Key>');
+        help:
+            'Add new text to the language file using GPT <you have to provide API Key>');
     argParser.addFlag('eapi', help: 'Edit the API Key for the GPT');
     argParser.addFlag('adm',
         help: 'Add new text to the language file manually for all languages');
@@ -31,7 +32,6 @@ class Lang extends Command {
     await _checkLanguageFolderPath();
 
     if (argResults?['adg'] == true) {
-
       await _handleAddWithGPT();
     } else if (argResults?['eapi'] == true) {
       await _editAPIKey();
@@ -44,9 +44,11 @@ class Lang extends Command {
     } else if (argResults?['adm'] == true) {
       _addManualy();
     } else {
-      print('No valid flag provided. Use --help to see available options.'.red());
+      print(
+          'No valid flag provided. Use --help to see available options.'.red());
     }
   }
+
   _editPath() {
     String? newPath = TextField(
         prompt: "Enter The New Path",
@@ -67,20 +69,19 @@ class Lang extends Command {
   Future<void> _checkLanguageFolderPath() async {
     if (settings.loadFile()?['lang_path'] == null) {
       String path = TextField(
-                  prompt: "✏️ Enter your language folder path: ",
-                  hint: "ex:assets/lng/",
-      validator: (String path) {
-                    print(path);
-        if (path.isEmpty) {
-          throw ValidationErrors("The path can not be empty");
-        } else if (!Directory(path).existsSync()) {
-          throw ValidationErrors("This path is not exist in your project");
-        } else {
-          return true;
-        }
-      }
-      )
-              .oneline() ??
+              prompt: "✏️ Enter your language folder path: ",
+              hint: "ex:assets/lng/",
+              validator: (String path) {
+                print(path);
+                if (path.isEmpty) {
+                  throw ValidationErrors("The path can not be empty");
+                } else if (!Directory(path).existsSync()) {
+                  throw ValidationErrors(
+                      "This path is not exist in your project");
+                } else {
+                  return true;
+                }
+              }).oneline() ??
           "";
       _directoryPath = path;
       settings.createFile({"lang_path": _directoryPath});
@@ -98,20 +99,17 @@ class Lang extends Command {
   }
 
   Future<void> _promptForAPIKey() async {
-
-    String apiKey = TextField(
-        prompt: '✏️ Enter your API Key: ',
-      hint: "From OpenAI"
-    ).oneline()!;
+    String apiKey =
+        TextField(prompt: '✏️ Enter your API Key: ', hint: "From OpenAI")
+            .oneline()!;
     Map<String, dynamic> keys = settings.createJwt(apiKey);
     settings.createFile({"gpt_key": keys['api'], "secret_key": keys['secret']});
   }
 
   Future<void> _editAPIKey() async {
-    String apiKey = TextField(
-        prompt: '✏️ Enter your API Key',
-        hint: "From OpenAI"
-    ).oneline()!;
+    String apiKey =
+        TextField(prompt: '✏️ Enter your API Key', hint: "From OpenAI")
+            .oneline()!;
     Map<String, dynamic> keys = settings.createJwt(apiKey);
     settings.createFile({"gpt_key": keys['api'], "secret_key": keys['secret']});
   }
@@ -130,12 +128,12 @@ class Lang extends Command {
       }
     } else {
       print(
-          '\n\n ⚠️No data provided to add. Use --add "your text here" to add new text.⚠️'.yellow());
+          '\n\n ⚠️No data provided to add. Use --add "your text here" to add new text.⚠️'
+              .yellow());
     }
   }
 
   Future<void> _updateDartClass() async {
-
     settings.pathChecker(_directoryPath);
     final directory = Directory(_directoryPath);
     late File langFile;
@@ -156,11 +154,11 @@ class Lang extends Command {
     final jsonString = await langFile.readAsString();
     final Map<String, dynamic> jsonData = json.decode(jsonString);
     final generatedCode = _generateClassCode(jsonData);
-final loading = CircleLoading(
-          onDoneText: 'Your Dart class updated successfully',
-          loadingText: 'Updating your Dart class',
-        );
-        loading.start();
+    final loading = CircleLoading(
+      onDoneText: 'Your Dart class updated successfully',
+      loadingText: 'Updating your Dart class',
+    );
+    loading.start();
     await Directory("lib/auto_local").create(recursive: true);
     await File('lib/auto_local/lang.dart').writeAsString(generatedCode);
     loading.stop();
@@ -260,14 +258,15 @@ $classMethods
             print('Language file not found for code: $key'.red());
           }
         }
-loading.stop();
+        loading.stop();
         print('''
           -----------------👀 The Translation Added 👀-----------------
           -> The text translated to [${languages.join(', ')}]
           -> Original text: $text
           -> The text Key: ${data['en'].replaceAll(" ", "_").replaceAll(".", "").replaceAll("'", "").toLowerCase()}
           -----------------------------------------------------------
-        '''.green());
+        '''
+            .green());
       } else {
         print('Empty or invalid data received from GPT'.red());
       }
@@ -283,7 +282,8 @@ loading.stop();
     });
 
     print(
-        "|------------------Waiting new data in $_directoryPath---------------------|".magenta());
+        "|------------------Waiting new data in $_directoryPath---------------------|"
+            .magenta());
   }
 
   _checkUsingAppLocal() {
@@ -432,7 +432,6 @@ loading.stop();
       throw Exception("Directory not found");
     }
   }
-
 
   @override
   String get description =>

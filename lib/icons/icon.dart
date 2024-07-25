@@ -7,7 +7,7 @@ import 'package:dart_widget/dart_widget.dart';
 import 'package:path/path.dart' as path;
 import 'package:tint/tint.dart';
 
-class Icons  extends Command{
+class Icons extends Command {
   Icons() {
     argParser.addFlag('add',
         help: 'Add new SVG code and convert it to SVG file');
@@ -16,59 +16,58 @@ class Icons  extends Command{
     argParser.addFlag('ref', help: 'To refresh the dart class file');
     argParser.addFlag('auto',
         help:
-        'Listen for any changes in icons/path/<svg files> and update the dart class');
+            'Listen for any changes in icons/path/<svg files> and update the dart class');
   }
-late String _directoryPath;
-late bool _usingFlutterSVG;
-Settings settings = Settings();
+  late String _directoryPath;
+  late bool _usingFlutterSVG;
+  Settings settings = Settings();
 
-String className="AutoIcons";
+  String className = "AutoIcons";
   @override
   void run() {
-
-  _checkIconsFolderPath();
-  if (argResults?['add'] == true) {
-    _addNewIcon();
-  } else if (argResults?['edit'] == true) {
-    _editClassName();
-  } else if (argResults?['ep'] == true) {
-    _editIconsPath();
-  } else if (argResults?['ref'] == true) {
-    _generateLocalizationClasses();
-  } else if (argResults?['auto'] == true) {
-    _generateLocalizationClasses();
-    _watchDirectory(Directory(_directoryPath));
-  } else {
-    print(
-        'Invalid command. Usage: auto_local icons --add | --edit | --ep | --ref | --auto'.red());
+    _checkIconsFolderPath();
+    if (argResults?['add'] == true) {
+      _addNewIcon();
+    } else if (argResults?['edit'] == true) {
+      _editClassName();
+    } else if (argResults?['ep'] == true) {
+      _editIconsPath();
+    } else if (argResults?['ref'] == true) {
+      _generateLocalizationClasses();
+    } else if (argResults?['auto'] == true) {
+      _generateLocalizationClasses();
+      _watchDirectory(Directory(_directoryPath));
+    } else {
+      print(
+          'Invalid command. Usage: auto_local icons --add | --edit | --ep | --ref | --auto'
+              .red());
+    }
   }
 
+  Future<void> _checkIconsFolderPath() async {
+    if (settings.loadFile()?['icons_path'] == null) {
+      String path = TextField(
+              prompt: "✏️ Enter your Icons folder path: ",
+              hint: "ex:assets/icons/",
+              validator: (String path) {
+                if (path.isEmpty) {
+                  throw ValidationErrors("The path can not be empty");
+                } else if (!Directory(path).existsSync()) {
+                  throw ValidationErrors(
+                      "This path is not exist in your project");
+                } else {
+                  return true;
+                }
+              }).oneline() ??
+          "";
+      _directoryPath = path;
+      settings.createFile({"icons_path": _directoryPath});
+    } else {
+      settings.pathChecker(settings.loadFile()?['icons_path']);
+      _directoryPath = settings.loadFile()!['icons_path']!;
+    }
   }
-Future<void> _checkIconsFolderPath() async {
-  if (settings.loadFile()?['icons_path'] == null) {
-    String path = TextField(
-        prompt: "✏️ Enter your Icons folder path: ",
-        hint: "ex:assets/icons/",
-        validator: (String path) {
 
-          if (path.isEmpty) {
-            throw ValidationErrors("The path can not be empty");
-          } else if (!Directory(path).existsSync()) {
-            throw ValidationErrors("This path is not exist in your project");
-          } else {
-            return true;
-          }
-        }
-    )
-        .oneline() ??
-        "";
-    _directoryPath = path;
-    settings.createFile({"icons_path": _directoryPath});
-  } else {
-    settings.pathChecker(settings.loadFile()?['icons_path']);
-    _directoryPath = settings.loadFile()!['icons_path']!;
-  }
-}
   void _watchDirectory(Directory directory) {
     directory.watch(events: FileSystemEvent.create).listen((event) {
       if (event is FileSystemCreateEvent && event.path.endsWith('.svg')) {
@@ -80,63 +79,68 @@ Future<void> _checkIconsFolderPath() async {
   void _generateLocalizationClasses() {
     final directory = Directory(_directoryPath);
 
-
-      final files = directory.listSync().whereType<File>().toList();
-      List<String> fileNames = [];
-if(files.isEmpty){
-  print('Your directory is empty. Please add some SVG files.'.red());
-  return;
-}
-Map<String, String> data = loadCredentials()??{};
-if(data['icons']!=null){
-  className = data['icons']!;
-
-}else{
-  className = TextField(
-      prompt: "✏️ Enter your class name",
-      hint: "ex:AutoIcons",
-      validator: (String name) {
-        if(RegExp(r'^[a-zA-Z0-9_]+$').hasMatch(name)){
-          return true;
-        }else{
-          throw ValidationErrors("Invalid class name. Class name should be in CamelCase");
-        }
+    final files = directory.listSync().whereType<File>().toList();
+    List<String> fileNames = [];
+    if (files.isEmpty) {
+      print('Your directory is empty. Please add some SVG files.'.red());
+      return;
+    }
+    Map<String, String> data = loadCredentials() ?? {};
+    if (data['icons'] != null) {
+      className = data['icons']!;
+    } else {
+      className = TextField(
+          prompt: "✏️ Enter your class name",
+          hint: "ex:AutoIcons",
+          validator: (String name) {
+            if (RegExp(r'^[a-zA-Z0-9_]+$').hasMatch(name)) {
+              return true;
+            } else {
+              throw ValidationErrors(
+                  "Invalid class name. Class name should be in CamelCase");
+            }
+          }).oneline()!;
+      settings.createFile({
+        "icons": className,
+      });
+    }
+    for (final file in files) {
+      if (file.path.endsWith('.svg')) {
+        String fileName = path.basenameWithoutExtension(file.path);
+        fileNames.add(fileName);
       }
-  ).oneline()!;
-  settings.createFile({
-    "icons":className,
-  });
-}
-      for (final file in files) {
-        if (file.path.endsWith('.svg')) {
-          String fileName = path.basenameWithoutExtension(file.path);
-          fileNames.add(fileName);
-        }
-      }
-
-      _updateDartClass(fileNames);
     }
 
+    _updateDartClass(fileNames);
+  }
 
   Future<void> _updateDartClass(List<String> names) async {
     final generatedCode = await _generateClassCode(names);
-    Directory("lib/auto_local").create(recursive: true).then((Directory directory) {
+    Directory("lib/auto_local")
+        .create(recursive: true)
+        .then((Directory directory) {
       File('${directory.path}/icons.dart').writeAsStringSync(generatedCode);
       print("""
 |-----------------------Done 👀----------------------------|
 -> 🥳 Your file is created in ${directory.path}/icons.dart 🥳 <-
-""".green());
+"""
+          .green());
     });
   }
 
   Future<String> _generateClassCode(List<String> names) async {
-   await _checkSvgPackage();
+    await _checkSvgPackage();
     final StringBuffer classMethods = StringBuffer();
     int count = names.length;
-    classMethods.writeln('enum ${className.replaceFirst(className[0], className[0].toUpperCase())}s {');
+    classMethods.writeln(
+        'enum ${className.replaceFirst(className[0], className[0].toUpperCase())}s {');
     for (var element in names) {
       List<String> splitElement = element.replaceAll(".", "").split("-");
-      String iconName = splitElement.map((e) => splitElement.indexOf(e) == 0 ? e : e[0].toUpperCase() + e.substring(1)).join();
+      String iconName = splitElement
+          .map((e) => splitElement.indexOf(e) == 0
+              ? e
+              : e[0].toUpperCase() + e.substring(1))
+          .join();
       classMethods.write("$iconName('$element')");
       if (--count > 0) {
         classMethods.writeln(',');
@@ -145,7 +149,7 @@ if(data['icons']!=null){
       }
     }
 
-    classMethods.writeln(''' 
+    classMethods.writeln('''
   const ${className.replaceFirst(className[0], className[0].toUpperCase())}s(this.key);
   final String key;
  }\n''');
@@ -177,9 +181,6 @@ if(data['icons']!=null){
   ''';
   }
 
-
-
-
   Map<String, String>? loadCredentials() {
     try {
       final file = File('auto_local.json');
@@ -199,32 +200,29 @@ if(data['icons']!=null){
 
   _addNewIcon() {
     String iconName = TextField(
-        prompt: "✏️ Enter your icon name: ",
-        hint: "ex:home_solid",
-        validator: (String name) {
-       if(RegExp(r'^[a-z0-9_]+$').hasMatch(name)){
-            return true;
-          }else{
-            throw ValidationErrors("Invalid icon name. Icon name should be in snake_case");
-          }
-        }
-    )
-        .oneline() ??
+            prompt: "✏️ Enter your icon name: ",
+            hint: "ex:home_solid",
+            validator: (String name) {
+              if (RegExp(r'^[a-z0-9_]+$').hasMatch(name)) {
+                return true;
+              } else {
+                throw ValidationErrors(
+                    "Invalid icon name. Icon name should be in snake_case");
+              }
+            }).oneline() ??
         "";
     String svgCode = TextField(
-        prompt: "✏️ Enter your Svg Code\n",
-        hint: "press enter twice to finish",
-        validator: (String code) {
-          if (code.contains('<svg') && code.contains('</svg>')) {
-            return true;
-          } else {
-            throw ValidationErrors("Invalid SVG code");
-          }
-        }
-    )
-        .multiline() ??
+            prompt: "✏️ Enter your Svg Code\n",
+            hint: "press enter twice to finish",
+            validator: (String code) {
+              if (code.contains('<svg') && code.contains('</svg>')) {
+                return true;
+              } else {
+                throw ValidationErrors("Invalid SVG code");
+              }
+            }).multiline() ??
         "";
-    final file=File('$_directoryPath/$iconName.svg');
+    final file = File('$_directoryPath/$iconName.svg');
     file.writeAsStringSync(svgCode);
 
     print('✅ Your icon is created successfully'.green());
@@ -249,15 +247,15 @@ if(data['icons']!=null){
         prompt: "✏️ Enter your class name",
         hint: "ex:AutoIcons",
         validator: (String name) {
-          if(RegExp(r'^[a-zA-Z0-9_]+$').hasMatch(name)){
+          if (RegExp(r'^[a-zA-Z0-9_]+$').hasMatch(name)) {
             return true;
-          }else{
-            throw ValidationErrors("Invalid class name. Class name should be in CamelCase");
+          } else {
+            throw ValidationErrors(
+                "Invalid class name. Class name should be in CamelCase");
           }
-        }
-    ).oneline()!;
+        }).oneline()!;
     settings.createFile({
-      "icons":className,
+      "icons": className,
     });
     _generateLocalizationClasses();
     print('✅ Your class name is updated to $className successfully'.green());
@@ -265,29 +263,30 @@ if(data['icons']!=null){
 
   _editIconsPath() {
     String path = TextField(
-        prompt: "✏️ Enter your Icons folder path: ",
-        hint: "ex:assets/icons/",
-        validator: (String path) {
-          if (path.isEmpty) {
-            throw ValidationErrors("The path can not be empty");
-          } else if (!Directory(path).existsSync()) {
-            throw ValidationErrors("This path is not exist in your project");
-          } else {
-            return true;
-          }
-        }
-    )
-        .oneline() ??
+            prompt: "✏️ Enter your Icons folder path: ",
+            hint: "ex:assets/icons/",
+            validator: (String path) {
+              if (path.isEmpty) {
+                throw ValidationErrors("The path can not be empty");
+              } else if (!Directory(path).existsSync()) {
+                throw ValidationErrors(
+                    "This path is not exist in your project");
+              } else {
+                return true;
+              }
+            }).oneline() ??
         "";
     settings.createFile({"icons_path": path});
     _directoryPath = path;
     print('✅ Your icons path is updated to $path successfully'.green());
   }
-@override
-// TODO: implement description
-String get description => "Generate language file and listen for any changes in icons/path/<svg files>";
 
-@override
+  @override
+// TODO: implement description
+  String get description =>
+      "Generate language file and listen for any changes in icons/path/<svg files>";
+
+  @override
 // TODO: implement name
-String get name => "icons";
+  String get name => "icons";
 }
