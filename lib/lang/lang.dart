@@ -32,6 +32,7 @@ class Lang extends Command {
     await _checkLanguageFolderPath();
 
     if (argResults?['adg'] == true) {
+
       await _handleAddWithGPT();
     } else if (argResults?['eapi'] == true) {
       await _editAPIKey();
@@ -179,7 +180,7 @@ class Lang extends Command {
           return match.group(1)!.toUpperCase();
         });
 
-        classMethods.write("$formattedKey('$key')");
+        classMethods.write("${formattedKey.replaceAll(RegExp(r'[?,\-+_\[/\\\]@#$%^&*()!=±§<.>`~]'), '')}('$key')");
         if (--count > 0) {
           classMethods.writeln(',');
         } else {
